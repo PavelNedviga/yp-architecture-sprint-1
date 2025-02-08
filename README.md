@@ -667,12 +667,33 @@ Dockerfile.frontend. Базовые образы сделаны из node:18-sli
 > Предоставьте структуру кода и обоснуйте своё решение в Readme.md. Вы можете создать необходимые проекты, добавить в них подкаталоги для контролов и логики, разложить код исходного проекта по ним, но запускать проекты не нужно.
 > Главное — верно определить, какие компоненты в какой микрофронтенд пойдут.
 
+Содержимое файлов не настраивалось. Подкаталоги не создавались.
+
 ```text
-/auth-microfrontend
+/host
+  /src
+    App.js
+    Bootstrap.js
+    routes.js               // 
+    Header.js               // Заглавие
+    Footer.js               // Подвал
+    PopupWithForm.js        // Испольузется в нескольких модулях - потому вынесено в хост
+    ProtectedRoute.js       // Защита главной страницы. 
+                            // Только при отсутствии контекста авторизации перенаправит в `auth`
+  /context
+    CurrentUserContext.js  // Используется всеми икрофронтендами. Выносим в хост
+  /images 
+    /...                    // иконки пр.
+  index.ts
+  webpack.config.js
+  package.json
+  ...
+/auth
   /src
     /components
       Login.js               // Компонент входа пользователя
       Register.js            // Компонент регистрации пользователя
+      InfoTooltip.js         // Всплывающее окно об успехе/провале регистрации
     /styles
       login.css              // Стили для компонента входа
       register.css           // Стили для компонента регистрации
@@ -681,10 +702,34 @@ Dockerfile.frontend. Базовые образы сделаны из node:18-sli
     index.js                 // Точка входа микрофронтенда
   package.json               // Зависимости и скрипты микрофронтенда
   webpack.config.js
-/profile-microfrontend
+  ...
+/profile
+  /src
+    /Main.js
+    /Profile.js
+    /EditAvatarPopup.js
+    /EditProfilePopup.js
+  /utils
+    api.js                   // Переносим только характерные методы:
+                             // `getUserInfo`, `setUserAvatar`, `setUserInfo`
+  package.json               // Зависимости и скрипты микрофронтенда
+  webpack.config.js
+  ...
+/dashboard
+  /src
+    /AddPlacePopup.js
+    /Card.js
+    /ImagePopup.js
+  /utils
+    api.js                   // Переносим только характерные методы: 
+                             // `getCardList`, `addCard`, `removeCard`, `changeLikeCardStatus`
+  package.json               // Зависимости и скрипты микрофронтенда
+  webpack.config.js
   ...
 ```
 
 ### Уровень 3. Запуск готового кода
 
 > Настройте маршрутизацию и убедитесь, что все компоненты работают корректно
+
+Не выполнялся.
